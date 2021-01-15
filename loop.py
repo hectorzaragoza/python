@@ -16,6 +16,28 @@
 #for latex in range(10): #assumes start of 0 and step 1
 #    print(latex)
 
-for latexTwo in range(11,20,-1):
-    print(latexTwo)
+#for latexTwo in range(0,20,1):
+#    print(latexTwo)
 
+#While Loops
+#While a certain condition is true, continue to loop, until the condition is false
+
+#while condition/booleanExpression:
+#    Code
+#    moreCode 
+#no longer inside the loop
+
+counter = 0
+
+while counter < 10: #our while loop will keep going until counter is 10
+    print(counter)
+    counter = counter + 1 #is the same as counter += 1
+
+#start of with 0, reach loop and check condition of loop, so True, print 0, enter loop, add 1 and rerun loop.
+print(counter) #this prints 10 because that is the last value of counter that made the previous loop false
+
+text = ""
+
+while text != "AAA":
+    print(text)
+    text += "A" #text = text + "A"
