@@ -41,3 +41,11 @@ text = ""
 while text != "AAA":
     print(text)
     text += "A" #text = text + "A"
+    #"" + "A" -> "A"
+    #"A" + "A" -> "AA"
+    #"AA" + "A" -> but loop does not print because it equals "AAA"
+
+#Indentation plays a role in python, it is not just whitespace. Indentation
+#is used by the Python Interpreter to form groupings when special cases are create.
+#It dictates which block of code belongs into which grouping, as well as when that grouping stops through no 
+#longer using the indentation.
