@@ -22,4 +22,27 @@ with open("firstOutput.txt","a") as out: #opening txt file and storing it as out
     out.write("\n")
     out.write("end of file")
     #using with open will automatically close your file without having to use .close function
+
+
+#if you are using one file for the whole code, use out = open, if you only want to use the file for short
+#term or specific thing, use with open
+
+#File Input
+inputFile = open("firstOutput.txt", "r") #if you dont include , "r", the code will assume you want to just read the file
+#line 31 stores the opening file function in inputfile, 33 stores the reading function in filecontent, 34 prints content read
+fileContent = inputFile.read()
+print(fileContent)
+inputFile.close()
+
+print("Printing line by line")
+inputFile = open("firstOutput.txt","r")
+for line in inputFile:
+    print(line) #adds a new line automatically using the print function, if you dont want this.. print(line,end = "")
+inputFile.close()
     
+print("Line")    
+with open("firstOutput.txt", "r") as inputFile:
+    line = inputFile.readline()
+    print(line[:4])
+
+
