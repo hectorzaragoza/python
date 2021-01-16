@@ -13,7 +13,6 @@ out.write("\n") #escape sequence jumps to new line
 out.close() #necessary to close first before being able to use out variable again in line 16.
 
 out = open("firstOutput.txt", "a") #append mode
-
 out.write("Appending Text rather than overwriting")
 out.close()
 
@@ -30,7 +29,8 @@ with open("firstOutput.txt","a") as out: #opening txt file and storing it as out
 #File Input
 inputFile = open("firstOutput.txt", "r") #if you dont include , "r", the code will assume you want to just read the file
 #line 31 stores the opening file function in inputfile, 33 stores the reading function in filecontent, 34 prints content read
-fileContent = inputFile.read()
+fileContent = inputFile.read() #as is,it is reading entire file, but you can specify desired bytes in parenthesis
+#fileContent = inputFIle.read()
 print(fileContent)
 inputFile.close()
 
@@ -41,8 +41,20 @@ for line in inputFile:
 inputFile.close()
     
 print("Line")    
-with open("firstOutput.txt", "r") as inputFile:
-    line = inputFile.readline()
-    print(line[:4])
+with open("firstOutput.txt", "rb") as inputFile: #b is byte mode, b output will show more technical output
+    line = inputFile.readline() #reads and writes first line
+    line = inputFile.readline() #reads and overwrites first line with second line
+    print(line, end = "")  
+#if we know we want to be at position byte 50
+    inputFile.seek(1,0) #seek takes two inputs, offset and optional [from] #from can be 0-beginning, 1-current position, 2- end of file
+    #Line 49 - we went back to the beginning of the file and read the first 5 bytes
+    print(inputFile.read(5))
+    inputFile.seek(3,1)
+    print(inputFile.read(3))
+    inputFile.seek(-5,2)
+    print(inputFile.read())
+    print(inputFile.tell())
 
+    inputFile.seek(0,0)
+    print(inputFile.tell())
 
