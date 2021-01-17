@@ -28,9 +28,39 @@
 #    print(" "*whiteSpace+"O"*numberofOs)
 #    numberofOs += 2
 
-y = 1
-x = 5
-for i in range(1,4):
-    z = i - y
-    print(" "*z + "O"*x)
-    x -= 2   
+#cleaned up lines 24-29
+#y = 1
+#x = 5
+#for i in range(1,4):
+#    z = i - y
+#    print(" "*z + "O"*x)
+#    x -= 2   
+
+#Exercise 3
+#Turn the program in exercise 2 into a function that takes the height of the pyramid as an input variable, and also the character
+#to be used in the pyramid as another input value
+
+#numberofLines = 3
+#numberOfOs = 1
+#for i in range(1,4):
+#    whiteSpace = numberOfLines - i
+#    print(" "*whiteSpace+"O"*numberOfOs+" "*whiteSpace)
+#    numberOfOs += 2
+
+#Skeleton of a function
+#def VarName():
+    #code
+    #MoreCode
+
+def createPyramid(numberOfLines,character):
+    #numberofLines = 3
+    numberOfChars = 1
+    for i in range(1,numberOfLines + 1):
+        whiteSpace = numberOfLines - i
+        print(" "*whiteSpace+
+            character*numberOfChars+
+            " "*whiteSpace)
+        numberOfChars += 2
+
+createPyramid(4,str(4))
+
