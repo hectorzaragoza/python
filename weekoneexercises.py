@@ -98,3 +98,18 @@ createPyramid(4,str(4))
 
 
 #Exercise 5
+#with open("testfile.txt","w") as good:
+#    good.write("How do i do it!")
+
+def readfile(fileLoc):
+    content = ""
+    with open(fileLoc,"r") as readme:
+        #for line in readme:
+            #print(line)
+        #content = readme.read()
+        #print(content[::-1])
+        for line in readme:
+            content += line
+        print(content[::-1])
+
+readfile("testfile.txt")
