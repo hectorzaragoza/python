@@ -64,3 +64,37 @@ def createPyramid(numberOfLines,character):
 
 createPyramid(4,str(4))
 
+#Exercise 4 - Creating a file output of Ex. 3
+#def createPyramid(numberOfLines,character,outName,Outlocation):
+    #numberofLines = 3
+
+#    out = open(outName,"w") #using this method, you have to remember to close the file. So, use with open()
+    
+#    numberOfChars = 1
+    #creating a blank file
+    #so that we can do with open in append mode later
+    #out = open(outLocation+outName,"w")
+    #out.close()
+
+#   with open(Outlocation+outName,"w") as out:
+#        pass #this just tells the program that we don't do anything here.
+
+#    for i in range(1,numberOfLines + 1):
+#        whiteSpace = numberOfLines - i
+#        output = (" "*whiteSpace+
+#            character*numberOfChars+
+#            " "*whiteSpace)
+#        
+#        print(output)
+#        with open(Outlocation+outName,"a") as out:
+#            out.write(output)
+#            out.write("\n")
+#        numberOfChars += 2
+
+#    out.close()
+
+#createPyramid(30,"L","Output.txt","/Users\zarag\Desktop\helloworld\\") #location always ends with \\in windows or / in mac or linux 
+#you have to make sure the folder you want to store file in exists.
+
+
+#Exercise 5
