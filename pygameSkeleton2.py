@@ -1,6 +1,16 @@
 import pygame
 import sys
 
+#function for rescaling - crop surface of goalLeft
+def cropSurface(newWidth,newHeight,cropWidth,cropHeight,image):
+    newSurf = pygame.Surface((newWidth,newHeight),
+    pygame.SRCALPHA,32)
+
+    newSurf.blit(image,(0,0),(cropWidth,cropHeight,newWidth,newHeight))
+    return newSurf
+
+
+
 #can also do import pygame, sys
 pygame.init()
 
@@ -28,14 +38,17 @@ playerWidth = player.get_rect().width #go into surface, get recatngle surface, a
 playerHeight = player.get_rect().height #no parentheses for width and height as they are variables not functions
 player = pygame.transform.scale(player,(playerWidth*rescaleFactor,playerHeight*rescaleFactor))
 player = pygame.transform.rotate(player,90)
-screen.blit(player,(0,0))
+
+#screen.blit(player,(0,0))
+
+
 foot = pygame.image.load("characterFoot.png").convert_alpha()
 footWidth = foot.get_rect().width
 footHeight = foot.get_rect().height
 foot = pygame.transform.scale(foot,(footWidth*rescaleFactor,footHeight*rescaleFactor))
-
 foot = pygame.transform.rotate(foot,90)
-screen.blit(foot,(0,0))
+
+#screen.blit(foot,(0,0))
 
 rescaleBall = 2
 ball = pygame.image.load("ball.png").convert_alpha()
@@ -43,7 +56,16 @@ ballWidth = ball.get_rect().width
 ballHeight = ball.get_rect().height
 ball = pygame.transform.scale(ball,(ballWidth*rescaleBall,ballHeight*rescaleBall))
 
-screen.blit(ball,(0,0))
+#screen.blit(ball,(0,0))
+
+goalLeft = pygame.image.load("goalLeft.png").convert_alpha()
+goalLeft = pygame.transform.scale(goalLeft,(250,270))
+goalLeftWidth = goalLeft.get_rect().width
+goalLeftHeight = goalLeft.get_rect().height
+adjust = 12
+goalLeft = cropSurface(goalLeftWidth/2+adjust,goalLeftHeight/2+adjust,goalLeftWidth/2-adjust,goalLeftHeight/2-adjust,goalLeft)
+
+screen.blit(goalLeft,(0,0))
 
 finished = False
 while finished != True: #while the game is not finished = False, continue into the for loops
