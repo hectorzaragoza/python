@@ -102,6 +102,8 @@ screen.blit(ball,(ballX-ball.get_rect().width/2,bally-ball.get_rect().width/2))
 
 
 
+
+
 finished = False
 while finished != True: #while the game is not finished = False, continue into the for loops
     #processing all the events
@@ -112,7 +114,21 @@ while finished != True: #while the game is not finished = False, continue into t
         #in this case, event has a property called type
             pygame.quit()
             sys.exit() #this ends python at this line.
-
+#Processing Actions of Pressing Keys and Pass Statemnet
+#What do we want the images to do when we interact with keyboard
+#So, we need to process the keyboard keys
+    pressedKeys = pygame.key.get_pressed()
+    #pressedKeys = [False, False, False,...,True,False,...] This is going through the values of all the keys
+    print(pygame.K_LEFT, pressedKeys[pygame.K_LEFT],pressedKeys[pygame.K_RIGHT],pressedKeys[pygame.K_SPACE])
+    if pressedKeys[pygame.K_LEFT] == 1:
+        #== 1 is true so Left key has been pressed
+        pass #this pass statement lets us move beyond this code, so it does nothing. But, pass statement lets you build code structure but you are not necessarily finishing it all
+    elif pressedKeys[pygame.K_RIGHT] == 1:
+        #move player right
+        pass
+    elif pressedKeys[pygame.K_SPACE] == 1:
+        #shoot
+        pass
     pygame.display.flip() #update method/load next frame
 
 #pygame.quit()
