@@ -16,3 +16,11 @@ print(schoolDistricts.keys()) #displays the keys
 
 for key in schoolDistricts:
     print(key,schoolDistricts[key])
+
+#why use a dictionary? your go to will usually be lists but you'll know when to use tuple or dicitonary or list
+
+listofTranslations = ["Hello","Goodbye"]
+listofgerman = {"wie gehts" :"Hello","tschuss":"Goodbye"}
+
+
+
