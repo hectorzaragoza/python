@@ -38,6 +38,9 @@ playerWidth = player.get_rect().width #go into surface, get recatngle surface, a
 playerHeight = player.get_rect().height #no parentheses for width and height as they are variables not functions
 player = pygame.transform.scale(player,(playerWidth*rescaleFactor,playerHeight*rescaleFactor))
 player = pygame.transform.rotate(player,90)
+playerStart = player #THis is going to be our default reference for the player.
+
+currentRotation = 0
 
 
 
@@ -46,7 +49,7 @@ footWidth = foot.get_rect().width
 footHeight = foot.get_rect().height
 foot = pygame.transform.scale(foot,(footWidth*rescaleFactor,footHeight*rescaleFactor))
 foot = pygame.transform.rotate(foot,90)
-
+footStart = foot
 
 
 rescaleBall = 2
@@ -91,11 +94,14 @@ screen.blit(goalRight,(goalStart+goalLeft.get_rect().width+goalMiddle.get_rect()
 playerX = width/2
 playerY = 530
 
+playerXOriginal=playerX
+playerYOriginal=playerY
 screen.blit(player,(playerX-player.get_rect().width/2,playerY-player.get_rect().height/2))
 
 ballX = width/2
 bally = 450
 
+radius = playerY - bally #radius between ball and player
 #the foot will only show when the action of kicking is activated.
 screen.blit(foot,(0,0))
 screen.blit(ball,(ballX-ball.get_rect().width/2,bally-ball.get_rect().width/2))
@@ -103,6 +109,8 @@ screen.blit(ball,(ballX-ball.get_rect().width/2,bally-ball.get_rect().width/2))
 
 
 
+#defining frame rate
+frame = pygame.time.Clock()
 
 finished = False
 while finished != True: #while the game is not finished = False, continue into the for loops
@@ -129,6 +137,8 @@ while finished != True: #while the game is not finished = False, continue into t
     elif pressedKeys[pygame.K_SPACE] == 1:
         #shoot
         pass
+        #frame.tick(1) this pause here would apply only to SPace pressing
     pygame.display.flip() #update method/load next frame
+    frame.tick(30) #Desired FPS, if we put 30, we will never go above 30 FPS
 
 #pygame.quit()
