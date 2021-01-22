@@ -10,6 +10,8 @@ screen = pygame.display.set_mode(screenDimension)
 pygame.display.set_caption("Exercise One")
 
 
+
+
 finished = False
 while finished != True:
     for event in pygame.event.get():
