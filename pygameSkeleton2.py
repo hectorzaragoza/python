@@ -39,7 +39,6 @@ playerHeight = player.get_rect().height #no parentheses for width and height as 
 player = pygame.transform.scale(player,(playerWidth*rescaleFactor,playerHeight*rescaleFactor))
 player = pygame.transform.rotate(player,90)
 
-#screen.blit(player,(0,0))
 
 
 foot = pygame.image.load("characterFoot.png").convert_alpha()
@@ -48,7 +47,7 @@ footHeight = foot.get_rect().height
 foot = pygame.transform.scale(foot,(footWidth*rescaleFactor,footHeight*rescaleFactor))
 foot = pygame.transform.rotate(foot,90)
 
-#screen.blit(foot,(0,0))
+
 
 rescaleBall = 2
 ball = pygame.image.load("ball.png").convert_alpha()
@@ -56,7 +55,7 @@ ballWidth = ball.get_rect().width
 ballHeight = ball.get_rect().height
 ball = pygame.transform.scale(ball,(ballWidth*rescaleBall,ballHeight*rescaleBall))
 
-#screen.blit(ball,(0,0))
+
 
 goalLeft = pygame.image.load("goalLeft.png").convert_alpha()
 goalLeft = pygame.transform.scale(goalLeft,(250,270))
@@ -65,7 +64,43 @@ goalLeftHeight = goalLeft.get_rect().height
 adjust = 12
 goalLeft = cropSurface(goalLeftWidth/2+adjust,goalLeftHeight/2+adjust,goalLeftWidth/2-adjust,goalLeftHeight/2-adjust,goalLeft)
 
-screen.blit(goalLeft,(0,0))
+
+
+goalMiddle = pygame.image.load("goalMiddle.png").convert_alpha() #convert.alpha takes care of extra image you dont want
+goalMiddle = pygame.transform.scale(goalMiddle,(250,270)) #size of goal
+goalMiddleHeight = goalMiddle.get_rect().height
+goalMiddleWidth = goalMiddle.get_rect().width
+goalMiddle = cropSurface(goalMiddleWidth,goalMiddleHeight/2+adjust,0,goalMiddleHeight/2-adjust,goalMiddle)
+
+
+
+
+goalRight = pygame.image.load("goalRight.png").convert_alpha()
+goalRight = pygame.transform.scale(goalRight,(250,270))
+goalRightWidth = goalRight.get_rect().width
+goalRightHeight = goalRight.get_rect().height
+
+goalRight = cropSurface(goalRightWidth/2+adjust,goalRightHeight/2+adjust,0,goalRightHeight/2-adjust,goalRight)
+
+goalStart = (width-goalLeft.get_rect().width-goalMiddle.get_rect().width-goalRight.get_rect().width)/2
+
+screen.blit(goalLeft,(goalStart,0))
+screen.blit(goalMiddle,(goalStart+goalLeft.get_rect().width,0))
+screen.blit(goalRight,(goalStart+goalLeft.get_rect().width+goalMiddle.get_rect().width,0))
+
+playerX = width/2
+playerY = 530
+
+screen.blit(player,(playerX-player.get_rect().width/2,playerY-player.get_rect().height/2))
+
+ballX = width/2
+bally = 450
+
+#the foot will only show when the action of kicking is activated.
+screen.blit(foot,(0,0))
+screen.blit(ball,(ballX-ball.get_rect().width/2,bally-ball.get_rect().width/2))
+
+
 
 finished = False
 while finished != True: #while the game is not finished = False, continue into the for loops
