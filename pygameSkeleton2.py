@@ -26,13 +26,16 @@ def movePlayer(direction,radius,absRot): #absRot is current position
     return newX, newY, absRot + deltaTheta
 
 
-def UpdateFrameImages(): #creeating this function to refresh frame images more easily by calling funciton instead of entire code
+def UpdateFrameImages(showFoot = False): #creeating this function to refresh frame images more easily by calling funciton instead of entire code
     global screen, grassImage,goalLeft,goalMiddle,goalRight,ball,player
     global goalStart,ballX,bally,playerX,playerY
     screen.blit(grassImage,(0,0))
     screen.blit(goalLeft,(goalStart,0))
     screen.blit(goalMiddle,(goalStart+goalLeft.get_rect().width,0))
     screen.blit(goalRight,(goalStart+goalLeft.get_rect().width+goalMiddle.get_rect().width,0))
+    if showFoot:
+        global foot, footX, footY
+        screen.blit(foot,(footX-foot.get_rect().width/2,footY-foot.get_rect().width/2))
     screen.blit(ball,(ballX-ball.get_rect().width/2,bally-ball.get_rect().width/2))
     screen.blit(player,(playerX-player.get_rect().width/2,playerY-player.get_rect().height/2))
 
@@ -170,8 +173,23 @@ while finished != True: #while the game is not finished = False, continue into t
         #move player right
         #pass
     elif pressedKeys[pygame.K_SPACE] == 1:
-        #shoot
-        pass
+        xMove = (playerX-ballX)/10
+        yMove = (playerY-bally)/10
+        normMove = 1/math.sqrt(xMove**2+yMove**2)
+        distanceToShoulder = 20
+        shoulderAngle = currentRotation*math.pi/180
+        for i in range(3):
+            playerX -= xMove
+            playerY -= yMove
+            UpdateFrameImages()
+            pygame.display.flip()
+            frame.tick(30)
+        footX = (playerX + distanceToShoulder*math.cos(shoulderAngle)-25*xMove*normMove)
+        footY = (playerY - distanceToShoulder*math.sin(shoulderAngle)-25*yMove*normMove)
+        foot = pygame.transform.rotate(footStart, currentRotation)
+        UpdateFrameImages(True)
+        pygame.display.flip()
+        #xmove and ymove that define the x and y positions as we move towards the ball and updating position
         #frame.tick(1) this pause here would apply only to SPace pressing
     #the following line will refresh the player image given keyboard movement functions.
     UpdateFrameImages()
