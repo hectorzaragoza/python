@@ -1,5 +1,6 @@
 import pygame
 import sys
+import math
 
 #function for rescaling - crop surface of goalLeft
 def cropSurface(newWidth,newHeight,cropWidth,cropHeight,image):
@@ -9,6 +10,20 @@ def cropSurface(newWidth,newHeight,cropWidth,cropHeight,image):
     newSurf.blit(image,(0,0),(cropWidth,cropHeight,newWidth,newHeight))
     return newSurf
 
+def movePlayer(direction,radius,absRot): #absRot is current position
+    yChange = 5
+    deltaTheta = int(90/(radius/yChange)) #angle stepsize
+    if direction == "Left":
+        deltaTheta *= -1 #this is deltaTheta = deltaTheta * -1
+    
+    finalRot = (absRot+deltaTheta)*math.pi/180
+
+    Hypotenuse = radius*math.sin(finalRot)/(math.sin(math.pi-finalRot)/2)
+
+    newX = Hypotenuse*math.cos(math.pi/2-(math.pi-finalRot)/2)
+    newY = Hypotenuse*math.sin(math.pi/2-(math.pi-finalRot)/2)
+
+    return newX, newY, absRot + deltaTheta
 
 
 #can also do import pygame, sys
