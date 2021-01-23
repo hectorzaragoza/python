@@ -60,7 +60,7 @@
 #print(PowerVar)
 
 #Modulus Operator = the remainder of a division...there are cycles in modulus operators.
-#you can use the following operators -,+,*,**,/,%
+#you can use the following operators -,+,*,**,/,%,<,>, <=,>=
 #ModulusOp = 4%4
 #print(ModulusOp)
 
@@ -97,6 +97,10 @@ TestThree = 1
 TestFour = 1.0
 
 print(TestOne == TestTwo) #false
-print(TestOne != TestTwo)/n #True
-print(TestThree == TestFour)
-print(type(TestThree) == type(TestFour))
+print(TestOne != TestTwo) #True
+print(TestThree == TestFour) #True
+print(type(TestThree) == type(TestFour)) #False
+
+#you can also use <, >
+
+
