@@ -144,11 +144,19 @@ while finished != True: #while the game is not finished = False, continue into t
     #pressedKeys = [False, False, False,...,True,False,...] This is going through the values of all the keys
     print(pygame.K_LEFT, pressedKeys[pygame.K_LEFT],pressedKeys[pygame.K_RIGHT],pressedKeys[pygame.K_SPACE])
     if pressedKeys[pygame.K_LEFT] == 1:
+        changeX, changeY, currentRotation = movePlayer("Left",radius,currentRotation)
+        player = pygame.transform.rotate(playerStart,currentRotation)
+        playerX = playerXOriginal + changeX
+        playerY = playerYOriginal - changeY
         #== 1 is true so Left key has been pressed
-        pass #this pass statement lets us move beyond this code, so it does nothing. But, pass statement lets you build code structure but you are not necessarily finishing it all
+        #pass #this pass statement lets us move beyond this code, so it does nothing. But, pass statement lets you build code structure but you are not necessarily finishing it all
     elif pressedKeys[pygame.K_RIGHT] == 1:
+        changeX, changeY, currentRotation = movePlayer("Right",radius,currentRotation)
+        player = pygame.transform.rotate(playerStart,currentRotation)
+        playerX = playerXOriginal + changeX
+        playerY = playerYOriginal - changeY
         #move player right
-        pass
+        #pass
     elif pressedKeys[pygame.K_SPACE] == 1:
         #shoot
         pass
