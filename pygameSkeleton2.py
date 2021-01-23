@@ -96,7 +96,7 @@ adjust = 12
 goalLeft = cropSurface(goalLeftWidth/2+adjust,goalLeftHeight/2+adjust,goalLeftWidth/2-adjust,goalLeftHeight/2-adjust,goalLeft)
 
 
-
+goalHeight = goalLeft.get_rect().height
 goalMiddle = pygame.image.load("goalMiddle.png").convert_alpha() #convert.alpha takes care of extra image you dont want
 goalMiddle = pygame.transform.scale(goalMiddle,(250,270)) #size of goal
 goalMiddleHeight = goalMiddle.get_rect().height
@@ -184,12 +184,25 @@ while finished != True: #while the game is not finished = False, continue into t
             UpdateFrameImages()
             pygame.display.flip()
             frame.tick(30)
-        footX = (playerX + distanceToShoulder*math.cos(shoulderAngle)-25*xMove*normMove)
-        footY = (playerY - distanceToShoulder*math.sin(shoulderAngle)-25*yMove*normMove)
+        footX = (playerX + distanceToShoulder*math.cos(shoulderAngle)-20*xMove*normMove)
+        footY = (playerY - distanceToShoulder*math.sin(shoulderAngle)-20*yMove*normMove)
         foot = pygame.transform.rotate(footStart, currentRotation)
         UpdateFrameImages(True)
         pygame.display.flip()
+        
         #xmove and ymove that define the x and y positions as we move towards the ball and updating position
+        
+        ballXDirection = xMove*normMove
+        ballYDirection = yMove*normMove
+
+        speed = 10
+
+        while bally >= goalHeight:
+            ballX -= speed*ballXDirection
+            bally -= speed*ballYDirection
+            UpdateFrameImages()
+            pygame.display.flip()
+            frame.tick(30)
         #frame.tick(1) this pause here would apply only to SPace pressing
     #the following line will refresh the player image given keyboard movement functions.
     UpdateFrameImages()
