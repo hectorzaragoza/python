@@ -18,7 +18,7 @@ def movePlayer(direction,radius,absRot): #absRot is current position
     
     finalRot = (absRot+deltaTheta)*math.pi/180
 
-    Hypotenuse = radius*math.sin(finalRot)/(math.sin(math.pi-finalRot)/2)
+    Hypotenuse = radius*math.sin(finalRot)/(math.sin((math.pi-finalRot)/2))
 
     newX = Hypotenuse*math.cos(math.pi/2-(math.pi-finalRot)/2)
     newY = Hypotenuse*math.sin(math.pi/2-(math.pi-finalRot)/2)
@@ -161,6 +161,15 @@ while finished != True: #while the game is not finished = False, continue into t
         #shoot
         pass
         #frame.tick(1) this pause here would apply only to SPace pressing
+    #the following line will refresh the player image given keyboard movement functions.
+    screen.blit(grassImage,(0,0))
+    screen.blit(ball,(ballX-ball.get_rect().width/2,bally-ball.get_rect().width/2))
+    screen.blit(goalLeft,(goalStart,0))
+    screen.blit(goalMiddle,(goalStart+goalLeft.get_rect().width,0))
+    screen.blit(goalRight,(goalStart+goalLeft.get_rect().width+goalMiddle.get_rect().width,0))
+    screen.blit(ball,(ballX-ball.get_rect().width/2,bally-ball.get_rect().width/2))
+    screen.blit(player,(playerX-player.get_rect().width/2,playerY-player.get_rect().height/2))
+
     pygame.display.flip() #update method/load next frame
     frame.tick(30) #Desired FPS, if we put 30, we will never go above 30 FPS
 
