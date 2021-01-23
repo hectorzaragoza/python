@@ -18,13 +18,23 @@ def movePlayer(direction,radius,absRot): #absRot is current position
     
     finalRot = (absRot+deltaTheta)*math.pi/180
 
-    Hypotenuse = radius*math.sin(finalRot)/(math.sin((math.pi-finalRot)/2))
+    Hypotenuse = (radius*math.sin(finalRot)/(math.sin((math.pi-finalRot)/2)))
 
     newX = Hypotenuse*math.cos(math.pi/2-(math.pi-finalRot)/2)
     newY = Hypotenuse*math.sin(math.pi/2-(math.pi-finalRot)/2)
 
     return newX, newY, absRot + deltaTheta
 
+
+def UpdateFrameImages(): #creeating this function to refresh frame images more easily by calling funciton instead of entire code
+    global screen, grassImage,goalLeft,goalMiddle,goalRight,ball,player
+    global goalStart,ballX,bally,playerX,playerY
+    screen.blit(grassImage,(0,0))
+    screen.blit(goalLeft,(goalStart,0))
+    screen.blit(goalMiddle,(goalStart+goalLeft.get_rect().width,0))
+    screen.blit(goalRight,(goalStart+goalLeft.get_rect().width+goalMiddle.get_rect().width,0))
+    screen.blit(ball,(ballX-ball.get_rect().width/2,bally-ball.get_rect().width/2))
+    screen.blit(player,(playerX-player.get_rect().width/2,playerY-player.get_rect().height/2))
 
 #can also do import pygame, sys
 pygame.init()
@@ -144,17 +154,19 @@ while finished != True: #while the game is not finished = False, continue into t
     #pressedKeys = [False, False, False,...,True,False,...] This is going through the values of all the keys
     print(pygame.K_LEFT, pressedKeys[pygame.K_LEFT],pressedKeys[pygame.K_RIGHT],pressedKeys[pygame.K_SPACE])
     if pressedKeys[pygame.K_LEFT] == 1:
-        changeX, changeY, currentRotation = movePlayer("Left",radius,currentRotation)
-        player = pygame.transform.rotate(playerStart,currentRotation)
-        playerX = playerXOriginal + changeX
-        playerY = playerYOriginal - changeY
+        if currentRotation > -90:
+            changeX, changeY, currentRotation = movePlayer("Left",radius,currentRotation)
+            player = pygame.transform.rotate(playerStart,currentRotation)
+            playerX = playerXOriginal + changeX
+            playerY = playerYOriginal - changeY
         #== 1 is true so Left key has been pressed
         #pass #this pass statement lets us move beyond this code, so it does nothing. But, pass statement lets you build code structure but you are not necessarily finishing it all
     elif pressedKeys[pygame.K_RIGHT] == 1:
-        changeX, changeY, currentRotation = movePlayer("Right",radius,currentRotation)
-        player = pygame.transform.rotate(playerStart,currentRotation)
-        playerX = playerXOriginal + changeX
-        playerY = playerYOriginal - changeY
+        if currentRotation < 90:
+            changeX, changeY, currentRotation = movePlayer("Right",radius,currentRotation)
+            player = pygame.transform.rotate(playerStart,currentRotation)
+            playerX = playerXOriginal + changeX
+            playerY = playerYOriginal - changeY
         #move player right
         #pass
     elif pressedKeys[pygame.K_SPACE] == 1:
@@ -162,13 +174,7 @@ while finished != True: #while the game is not finished = False, continue into t
         pass
         #frame.tick(1) this pause here would apply only to SPace pressing
     #the following line will refresh the player image given keyboard movement functions.
-    screen.blit(grassImage,(0,0))
-    screen.blit(ball,(ballX-ball.get_rect().width/2,bally-ball.get_rect().width/2))
-    screen.blit(goalLeft,(goalStart,0))
-    screen.blit(goalMiddle,(goalStart+goalLeft.get_rect().width,0))
-    screen.blit(goalRight,(goalStart+goalLeft.get_rect().width+goalMiddle.get_rect().width,0))
-    screen.blit(ball,(ballX-ball.get_rect().width/2,bally-ball.get_rect().width/2))
-    screen.blit(player,(playerX-player.get_rect().width/2,playerY-player.get_rect().height/2))
+    UpdateFrameImages()
 
     pygame.display.flip() #update method/load next frame
     frame.tick(30) #Desired FPS, if we put 30, we will never go above 30 FPS
