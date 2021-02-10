@@ -44,5 +44,5 @@ print(testAnimalTwo.getType())
 #in a funciton, you need to declare global VarName in order to call it globally rather than only locally within the function.
 # so, self. allows us to do that as well. 
 print()
-print(testAnimal.__doc__)
+print(testAnimal.__doc__) #this will get you the documentation or help material written for that part of code
 print(testAnimalTwo.__doc__)
