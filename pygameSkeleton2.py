@@ -2,6 +2,19 @@ import pygame
 import sys
 import math
 
+#Creating a Game Class
+class Game:
+    def __init__(self,screen,screenDimensions):
+        self.fps = 30
+        self.screenDimensions = screenDimensions
+        self.frame = pygame.time.Clock()
+        self.screen = screen
+
+    def updateFrame(self):
+        self.frame.tick(self.fps)
+        pygame.display.flip()
+
+
 #function for rescaling - crop surface of goalLeft
 def cropSurface(newWidth,newHeight,cropWidth,cropHeight,image):
     newSurf = pygame.Surface((newWidth,newHeight),
