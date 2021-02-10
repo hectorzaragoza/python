@@ -14,6 +14,80 @@ class Game:
         self.frame.tick(self.fps)
         pygame.display.flip()
 
+class Background(Game): #loading background images and setting them up.
+    def __init__(self,screen,screenDimensions):
+        Game.__init__(self,screen,screenDimensions)
+        self.goalLeft = None #None is a value of none...
+        self.goalMiddle = None
+        self.goalRight = None
+        self.adjust = 12
+        self.grassImage = None
+
+    def loadGrass(self,name):
+        self.grassImage = pygame.image.load(name).convert()
+        self.grassImage = pygame.transform.scale(self.grassImage,self.screenDimensions)
+
+    def cropSurface(self,newWidth,newHeight,cropWidth,cropHeight,image):
+        newSurf = pygame.Surface((newWidth,newHeight),
+        pygame.SRCALPHA,32)
+        newSurf.blit(image,(0,0),(cropWidth,cropHeight,newWidth,newHeight))
+        return newSurf
+
+    def loadGoalLeft(self,name):
+        self.goalLeft = pygame.image.load(name).convert_alpha()
+        self.goalLeft = pygame.transform.scale(goalLeft,(250,270))
+        goalLeftWidth = self.goalLeft.get_rect().width
+        goalLeftHeight = self.goalLeft.get_rect().height
+        self.goalLeft = cropSurface(goalLeftWidth/2+self.adjust,goalLeftHeight/2+self.adjust,goalLeftWidth/2-self.adjust,goalLeftHeight/2-self.adjust,self.goalLeft)
+
+    def loadGoalMiddle(self,name):
+        self.goalMiddle = pygame.image.load(name).convert_alpha() #convert.alpha takes care of extra image you dont want
+        self.goalMiddle = pygame.transform.scale(self.goalMiddle,(250,270)) #size of goal
+        goalMiddleHeight = self.goalMiddle.get_rect().height
+        goalMiddleWidth = self.goalMiddle.get_rect().width
+        self.goalMiddle = cropSurface(goalMiddleWidth,goalMiddleHeight/2+self.adjust,0,goalMiddleHeight/2-self.adjust,self.goalMiddle)
+
+    def loadGoalRight(self,name):
+        self.goalRight = pygame.image.load(name).convert_alpha()
+        self.goalRight = pygame.transform.scale(self.goalRight,(250,270))
+        goalRightWidth = self.goalRight.get_rect().width
+        goalRightHeight = self.goalRight.get_rect().height
+        self.goalRight = cropSurface(goalRightWidth/2+self.adjust,goalRightHeight/2+self.adjust,0,goalRightHeight/2-self.adjust,self.goalRight)
+
+    def setStart(self):
+        self.goalStart = (self.screenDimensions[0]-self.goalLeft.get_rect().width-self.goalMiddle.get_rect().width-self.goalRight.get_rect().width)/2
+
+    def blitBackground(self):
+        self.screen.blit(self.goalLeft,(self.goalStart,0))
+        self.screen.blit(self.goalMiddle,(self.goalStart+goalLeft.get_rect().width,0))
+        self.screen.blit(self.goalRight,(self.goalStart+self.goalLeft.get_rect().width+self.goalMiddle.get_rect().width,0))
+
+class Ball(Game):
+    def __init__(self,screen,screenDimensions):
+        Game.__init__(self,screen,screenDimensions)
+        self.ballX = self.screenDimensions[0]/2
+        self.bally = 450
+        self.ball = None
+
+    def loadBall(self,name,rescaleBall):
+        self.ball = pygame.image.load(name).convert_alpha()
+        ballWidth = self.ball.get_rect().width
+        ballHeight = self.ball.get_rect().height
+        self.ball = pygame.transform.scale(self.ball,(ballWidth*rescaleBall,ballHeight*rescaleBall))
+
+    def blitBall(self):
+        self.screen.blit(self.ball,(self.ballX-self.ball.get_rect().width/2,self.bally-self.ball.get_rect().height/2))
+
+    def setKickDirection(self,playerX,playerY):
+        xMove = (playerX-self.ballX)/10
+        yMove = (playerY-self.bally)/10
+        normMove = 1/math.sqrt(xMove**2+yMove**2)
+        self.ballXDirection = xMove*normMove
+        self.ballYDirection = yMove*normMove
+    
+    def kickBall(self):
+        self.ballX -= speed*self.ballXDirection
+        self.bally -= speed*self.ballYDirection
 
 #function for rescaling - crop surface of goalLeft
 def cropSurface(newWidth,newHeight,cropWidth,cropHeight,image):
@@ -110,6 +184,7 @@ goalLeft = cropSurface(goalLeftWidth/2+adjust,goalLeftHeight/2+adjust,goalLeftWi
 
 
 goalHeight = goalLeft.get_rect().height
+
 goalMiddle = pygame.image.load("goalMiddle.png").convert_alpha() #convert.alpha takes care of extra image you dont want
 goalMiddle = pygame.transform.scale(goalMiddle,(250,270)) #size of goal
 goalMiddleHeight = goalMiddle.get_rect().height
@@ -123,7 +198,6 @@ goalRight = pygame.image.load("goalRight.png").convert_alpha()
 goalRight = pygame.transform.scale(goalRight,(250,270))
 goalRightWidth = goalRight.get_rect().width
 goalRightHeight = goalRight.get_rect().height
-
 goalRight = cropSurface(goalRightWidth/2+adjust,goalRightHeight/2+adjust,0,goalRightHeight/2-adjust,goalRight)
 
 goalStart = (width-goalLeft.get_rect().width-goalMiddle.get_rect().width-goalRight.get_rect().width)/2
