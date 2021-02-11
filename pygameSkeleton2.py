@@ -89,6 +89,99 @@ class Ball(Game):
         self.ballX -= speed*self.ballXDirection
         self.bally -= speed*self.ballYDirection
 
+class Player(Game):
+    def __init__(self,screen,screenDimensions):
+        Game.__init__(self,screen,screenDimensions)
+        self.player = None
+        self.playerStart = self.player
+        self.foot = None
+        self.footStart = self.foot
+        self.playerX = self.screenDimensions[0]/2
+        self.playerY = 530
+        self.playerXOriginal = self.playerX
+        self.playerYOriginal = self.playerY
+        self.footX = None
+        self.footY = None
+        self.currentRotation = 0
+        self.radius = 80
+        self.deltaTheta = int(90/(self.radius/5))
+
+    def loadPlayer(self,name,rescale):
+        self.player = pygame.image.load(name).convert_alpha()
+        playerWidth = self.player.get_rect().width
+        playerHeight = self.player.get_rect().height
+        self.player = pygame.transform.scale(self.player,
+                                        (playerWidth*rescale,
+                                         playerHeight*rescale))
+        self.player = pygame.transform.rotate(self.player,90)
+        self.playerStart = self.player
+
+    def loadFoot(self,name,rescale):
+        self.foot = pygame.image.load(name).convert_alpha()
+        footWidth = self.foot.get_rect().width
+        footHeight = self.foot.get_rect().height
+        self.foot = pygame.transform.scale(self.foot,
+                                      (footWidth*rescale,
+                                       footHeight*rescale))
+        self.foot = pygame.transform.rotate(self.foot,90)
+        self.footStart = self.foot
+
+    def rotatePlayer(self,angle):
+        self.player = pygame.transform.rotate(self.playerStart,angle)
+
+    def rotateFoot(self,angle):
+        self.foot = pygame.transform.rotate(self.footStart,angle)
+
+    def movePlayer(self,direction):
+        if direction == "Left":
+            self.deltaTheta *= -1 #deltaTheta * -1
+
+        finalRot = (self.currentRotation+self.deltaTheta)*math.pi/180
+        
+        Hypotenuse = (self.radius*math.sin(finalRot)/
+                      (math.sin((math.pi-finalRot)/2)))
+
+        changeX = Hypotenuse*math.cos(math.pi/2-(math.pi-finalRot)/2)
+        changeY = Hypotenuse*math.sin(math.pi/2-(math.pi-finalRot)/2)
+
+
+        self.currentRotation = self.currentRotation + self.deltaTheta
+        self.player = pygame.transform.rotate(self.playerStart,self.currentRotation)
+        self.playerX = self.playerXOriginal + changeX
+        self.playerY = self.playerYOriginal - changeY
+        
+        if direction == "Left":#revert
+            self.deltaTheta *= -1 
+               
+    def blitPlayer(self):
+        self.screen.blit(self.player,(self.playerX-self.player.get_rect().width/2,
+                    self.playerY-self.player.get_rect().height/2))
+        
+    def blitFoot(self):
+        self.screen.blit(self.foot,(self.footX - self.foot.get_rect().width/2,
+                          self.footY - self.foot.get_rect().height/2))
+
+    def playerShoot(self,ballX,ballY):
+        xMove = (self.playerX-ballX)/10
+        yMove = (self.playerY-ballY)/10
+        self.playerX -= xMove
+        self.playerY -= yMove
+
+    def positionFoot(self,ballX,ballY):
+        xMove = (self.playerX-ballX)/10
+        yMove = (self.playerY-ballY)/10
+        normMove = 1/math.sqrt(xMove**2+yMove**2)
+        distanceToShoulder = 20
+        shoulderAngle = self.currentRotation*math.pi/180
+
+        self.footX = (self.playerX +
+                 distanceToShoulder*math.cos(shoulderAngle)-
+                 20*xMove*normMove)
+        self.footY = (self.playerY -
+                 distanceToShoulder*math.sin(shoulderAngle)-
+                 20*yMove*normMove)
+        self.foot = pygame.transform.rotate(self.footStart,self.currentRotation)
+
 #function for rescaling - crop surface of goalLeft
 def cropSurface(newWidth,newHeight,cropWidth,cropHeight,image):
     newSurf = pygame.Surface((newWidth,newHeight),
